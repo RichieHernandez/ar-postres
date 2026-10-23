@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&R | Postres & Repostería Artesanal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FAF5EE',        /* Crema Vainilla */
+                            card: '#FFFDF9',      /* Blanco Cálido */
+                            chocolate: '#4A2E2B', /* Chocolate Obscuro */
+                            chocohover: '#36211F',
+                            rose: '#F3D0D7',      /* Rosa Pastel */
+                            roselight: '#FBF0F2',
+                            mint: '#D8E2DC',      /* Menta Suave */
+                            gold: '#D4AF37'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF5EE;
+            color: #4A2E2B;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF5EE;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #F3D0D7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4A2E2B;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-rose selection:text-brand-chocolate">
+
+    <!-- HEADER / NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-[#FAF5EE]/95 backdrop-blur-md border-b border-brand-rose/40 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Brand Monogram & Title -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full bg-brand-rose/30 border-2 border-brand-chocolate flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-brand-chocolate fill-current">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 2"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display, serif" font-weight="bold" font-size="28" letter-spacing="-1">A&R</text>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-serif font-bold text-xl md:text-2xl text-brand-chocolate block leading-none">A&R</span>
+                    <span class="text-[10px] uppercase tracking-widest text-brand-chocolate/80 font-medium">Postres Artesanales</span>
+                </div>
+            </a>
+
+            <!-- Menu Actions & Floating Cart Trigger -->
+            <div class="flex items-center gap-3">
+                <a href="#menu" class="hidden sm:inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-chocolate hover:text-brand-chocolate/70 transition-colors px-3 py-2">
+                    Menú
+                </a>
+                
+                <!-- Cart Button -->
+                <button onclick="toggleCartModal()" class="relative bg-brand-chocolate text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold hover:bg-brand-chocohover transition-all shadow-md active:scale-95">
+                    <i class="fa-solid fa-basket-shopping text-brand-rose"></i>
+                    <span class="hidden sm:inline">Tu Pedido</span>
+                    <span id="cart-count-badge" class="bg-brand-rose text-brand-chocolate text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden py-12 md:py-20 px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <!-- Text Content -->
+            <div class="space-y-6 text-center md:text-left z-10">
+                <span class="inline-block px-3 py-1 bg-brand-rose/40 text-brand-chocolate text-xs font-bold uppercase tracking-wider rounded-full border border-brand-rose">
+                    ✨ Repostería Gourmet & Fresca
+                </span>
+                <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-brand-chocolate leading-tight">
+                    El toque dulce perfecto para tu día
+                </h1>
+                <p class="text-base md:text-lg text-brand-chocolate/80 max-w-lg mx-auto md:mx-0">
+                    Hojaldras crujientes, fresas con crema preparadas al instante y postres artesanales elaborados con ingredientes de primera calidad.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                    <a href="#menu" class="bg-brand-chocolate text-white font-semibold px-8 py-3.5 rounded-full text-center shadow-lg hover:bg-brand-chocohover hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils text-brand-rose"></i> Ver Menú Completo
+                    </a>
+                    <button onclick="directWhatsAppContact()" class="bg-brand-roselight border-2 border-brand-chocolate text-brand-chocolate font-semibold px-6 py-3.5 rounded-full text-center hover:bg-brand-rose/50 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg text-green-700"></i> Duda o Pedido Directo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Featured Banner Image -->
+            <div class="relative flex justify-center">
+                <div class="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" 
+                         alt="Hojaldras artesanales de la casa" 
+                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-chocolate/60 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4 text-white p-4 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30">
+                        <p class="font-serif font-bold text-lg">Hojaldras Rellenas 🥐</p>
+                        <p class="text-xs text-white/90">Elige tu pan, rellenos, jarabes y toppings favoritos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOG / PRODUCTS SECTION -->
+    <section id="menu" class="py-12 bg-brand-card border-y border-brand-rose/30 px-4">
+        <div class="max-w-6xl mx-auto space-y-10">
+            <!-- Section Title -->
+            <div class="text-center space-y-2 max-w-xl mx-auto">
+                <span class="text-xs uppercase font-bold tracking-widest text-brand-chocolate/60">Delicias hechas para disfrutar</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-chocolate">Nuestro Menú Especial</h2>
+                <div class="w-16 h-1 bg-brand-rose mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- PRODUCT 1: Hojaldra Rellena Especial -->
+                <div class="bg-brand-bg rounded-3xl p-5 border border-brand-rose/50 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-4 bg-brand-rose/20">
+                            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Hojaldra Rellena" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-chocolate text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">
+                                $65 c/u
+                            </span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl text-brand-chocolate mb-1">Hojaldra Rellena Especial</h3>
+                        <p class="text-xs text-brand-chocolate/80 mb-4">
+                            Pan de nuez o mantequilla. Elige tu base de relleno (crema pastelera, Nutella o crema batida), opcional con chantillí, fruta fresca, jarabes y toppings.
+                        </p>
+                        <ul class="text-[11px] text-brand-chocolate/70 space-y-1 mb-4 bg-white/60 p-3 rounded-xl border border-brand-rose/30">
+                            <li>🥐 <strong>Pan:</strong> Nuez o Mantequilla</li>
+                            <li>🍦 <strong>Relleno:</strong> Crema Pastelera, Nutella o Crema Batida (+ Chantillí opcional)</li>
+                            <li>🍓 <strong>Fruta:</strong> Fresa, Durazno en almíbar, Plátano o Ninguna</li>
+                            <li>🍯 <strong>Jarabes & Toppings:</strong> A tu gusto o con opción a omitir</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCustomizer('hojaldra-rellena')" class="w-full bg-brand-rose hover:bg-brand-rose/80 text-brand-chocolate font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-98">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Personalizar y Pedir ($65)
+                    </button>
+                </div>
+
+                <!-- PRODUCT 2: Hojaldra Sencilla -->
+                <div class="bg-brand-bg rounded-3xl p-5 border border-brand-rose/50 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-4 bg-brand-rose/20">
+                            <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Hojaldra Sencilla" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-chocolate text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">
+                                $50 c/u
+                            </span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl text-brand-chocolate mb-1">Hojaldra Sencilla</h3>
+                        <p class="text-xs text-brand-chocolate/80 mb-4">
+                            Hojaldra crujiente rellena de crema pastelera y chantillí, con baño de jarabe a elegir, topping crujiente y una cereza en la cima.
+                        </p>
+                        <ul class="text-[11px] text-brand-chocolate/70 space-y-1 mb-4 bg-white/60 p-3 rounded-xl border border-brand-rose/30">
+                            <li>🍒 <strong>Incluye:</strong> Crema pastelera, Chantillí y Cereza</li>
+                            <li>🍯 <strong>Jarabe:</strong> Hershey's, Lechera o Ninguno</li>
+                            <li>🌰 <strong>Topping:</strong> Nuez, Coco, Almendra, Chispas o Ninguno</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCustomizer('hojaldra-sencilla')" class="w-full bg-brand-rose hover:bg-brand-rose/80 text-brand-chocolate font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-98">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Personalizar y Pedir ($50)
+                    </button>
+                </div>
+
+                <!-- PRODUCT 3: Fresas con Crema -->
+                <div class="bg-brand-bg rounded-3xl p-5 border border-brand-rose/50 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-4 bg-brand-rose/20">
+                            <img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Fresas con Crema Vaso Grande" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-chocolate text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">
+                                $100 (Vaso Grande)
+                            </span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl text-brand-chocolate mb-1">Fresas con Crema💖✨</h3>
+                        <p class="text-xs text-brand-chocolate/80 mb-4">
+                            Vaso grande servido con crema especial de la casa, Nutella, toppings a elegir y medio pastelito (Gansito o Delice).
+                        </p>
+                        <ul class="text-[11px] text-brand-chocolate/70 space-y-1 mb-4 bg-white/60 p-3 rounded-xl border border-brand-rose/30">
+                            <li>🧁 <strong>Incluye:</strong> Nutella + Medio Pastelito (Gansito o Delice)</li>
+                            <li>🌰 <strong>Topping:</strong> Nuez, Coco, Chispitas o Ninguno</li>
+                            <li>🍶 <strong>Jarabe:</strong> Lechera, Hershey's o Ninguno</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCustomizer('fresas-crema')" class="w-full bg-brand-rose hover:bg-brand-rose/80 text-brand-chocolate font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-98">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Personalizar y Pedir ($100)
+                    </button>
+                </div>
+
+                <!-- PRODUCT 4: Flan Napolitano -->
+                <div class="bg-brand-bg rounded-3xl p-5 border border-brand-rose/50 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-4 bg-brand-rose/20">
+                            <img src="https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Flan Napolitano" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-chocolate text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">
+                                $45 / Rebanada
+                            </span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl text-brand-chocolate mb-1">Flan Napolitano🥮</h3>
+                        <p class="text-xs text-brand-chocolate/80 mb-4">
+                            Rebanada individual de flan casero tradicional, cremosa textura bañada en su propio caramelo dorado.
+                        </p>
+                        <div class="bg-white/60 p-3 rounded-xl border border-brand-rose/30 mb-4">
+                            <p class="text-[11px] text-brand-chocolate/80">🍮 Receta casera cremosa lista para servir.</p>
+                        </div>
+                    </div>
+                    <button onclick="openCustomizer('flan-napolitano')" class="w-full bg-brand-chocolate hover:bg-brand-chocohover text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-98">
+                        <i class="fa-solid fa-plus"></i> Seleccionar Cantidad ($45)
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-chocolate text-brand-bg py-10 px-4 mt-auto">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Brand Info -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-center md:justify-start gap-2">
+                    <div class="w-8 h-8 rounded-full bg-brand-rose text-brand-chocolate flex items-center justify-center font-bold font-serif text-sm">A&R</div>
+                    <span class="font-serif font-bold text-lg">A&R Repostería</span>
+                </div>
+                <p class="text-xs text-brand-bg/70 max-w-sm">
+                    Endulzando tus momentos especiales con repostería artesanal hecha al momento con la mejor calidad y dedicación.
+                </p>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="space-y-2">
+                <h4 class="font-serif font-bold text-brand-rose text-sm uppercase tracking-wider">Entregas y Pedidos</h4>
+                <p class="text-xs text-brand-bg/80"><i class="fa-solid fa-clock text-brand-rose mr-1"></i> Pedidos para el día o anticipados.</p>
+                <p class="text-xs text-brand-bg/80"><i class="fa-solid fa-location-dot text-brand-rose mr-1"></i> Entregas en Oficina, Domicilio o Punto a convenir.</p>
+            </div>
+
+            <!-- Contacts -->
+            <div class="space-y-3">
+                <h4 class="font-serif font-bold text-brand-rose text-sm uppercase tracking-wider">Atención Directa</h4>
+                <div class="flex justify-center md:justify-start gap-4">
+                    <button onclick="directWhatsAppContact()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-rose hover:text-brand-chocolate flex items-center justify-center transition-colors">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </button>
+                    <a href="#" class="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-rose hover:text-brand-chocolate flex items-center justify-center transition-colors">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto border-t border-white/10 mt-8 pt-6 text-center text-[11px] text-brand-bg/50">
+            &copy; 2026 A&R Postres & Repostería Artesanal.
+        </div>
+    </footer>
+
+    <!-- PRODUCT CUSTOMIZER MODAL -->
+    <div id="customizer-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brand-bg w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border border-brand-rose flex flex-col max-h-[92vh]">
+            <!-- Modal Header -->
+            <div class="bg-brand-rose/40 px-6 py-4 border-b border-brand-rose/50 flex justify-between items-center">
+                <h3 id="customizer-title" class="font-serif font-bold text-lg text-brand-chocolate">Personalizar Producto</h3>
+                <button onclick="closeCustomizer()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-brand-chocolate text-sm">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form Body -->
+            <div id="customizer-body" class="p-5 overflow-y-auto space-y-4 text-sm">
+                <!-- Dynamic Choices injected via JS -->
+            </div>
+
+            <!-- Modal Footer (Quantity + Total + Add) -->
+            <div class="p-4 bg-white/90 border-t border-brand-rose/40 space-y-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] text-brand-chocolate/70 block font-medium">Cantidad de piezas:</span>
+                        <!-- Quantity Counter inside Modal -->
+                        <div class="flex items-center gap-2 mt-1">
+                            <button onclick="updateModalQty(-1)" class="w-8 h-8 rounded-lg bg-brand-rose/40 text-brand-chocolate font-bold flex items-center justify-center hover:bg-brand-rose transition-colors">-</button>
+                            <span id="modal-qty-display" class="font-bold text-base px-2 text-brand-chocolate">1</span>
+                            <button onclick="updateModalQty(1)" class="w-8 h-8 rounded-lg bg-brand-rose/40 text-brand-chocolate font-bold flex items-center justify-center hover:bg-brand-rose transition-colors">+</button>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[11px] text-brand-chocolate/70 block font-medium">Subtotal</span>
+                        <span id="customizer-price" class="font-serif font-bold text-2xl text-brand-chocolate">$0</span>
+                    </div>
+                </div>
+
+                <button id="add-customized-btn" class="w-full bg-brand-chocolate hover:bg-brand-chocohover text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-brand-rose"></i> Agregar a mi Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOPPING CART SLIDE-OVER MODAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-brand-bg w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-brand-rose/50">
+            <!-- Cart Header -->
+            <div class="bg-brand-rose/40 p-5 border-b border-brand-rose/50 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-brand-chocolate text-lg"></i>
+                    <h3 class="font-serif font-bold text-lg text-brand-chocolate">Resumen de Tu Pedido</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-brand-chocolate">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List Container -->
+            <div id="cart-items-container" class="p-5 overflow-y-auto flex-1 space-y-4">
+                <!-- Cart items rendered dynamically -->
+            </div>
+
+            <!-- Customer Details & Dispatch -->
+            <div class="p-5 bg-white border-t border-brand-rose/50 space-y-3.5 shadow-inner">
+                <div class="space-y-2.5">
+                    <div>
+                        <label class="block text-xs font-bold text-brand-chocolate mb-1">Nombre Completo *</label>
+                        <input type="text" id="customer-name" placeholder="Ej. Ana García" class="w-full text-xs p-2.5 rounded-lg border border-brand-rose/60 focus:outline-none focus:ring-2 focus:ring-brand-chocolate bg-brand-bg">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-chocolate mb-1">Tipo de Entrega *</label>
+                        <select id="delivery-type" class="w-full text-xs p-2.5 rounded-lg border border-brand-rose/60 focus:outline-none focus:ring-2 focus:ring-brand-chocolate bg-brand-bg">
+                            <option value="Entrega en Oficina / Trabajo">Entrega en Oficina / Trabajo</option>
+                            <option value="A Domicilio">A Domicilio</option>
+                            <option value="Punto a Convenir">Punto de Encuentro a Convenir</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-chocolate mb-1">Nota o instrucción general del pedido (Opcional)</label>
+                        <textarea id="order-general-note" rows="2" placeholder="Ej. Es para regalo, entregar a las 2:00 PM en la recepción..." class="w-full text-xs p-2.5 rounded-lg border border-brand-rose/60 focus:outline-none focus:ring-2 focus:ring-brand-chocolate bg-brand-bg resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- Total Sum & Order Button -->
+                <div class="pt-2 border-t border-dashed border-brand-chocolate/20">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-semibold text-sm text-brand-chocolate">Total General:</span>
+                        <span id="cart-total-price" class="font-serif font-bold text-2xl text-brand-chocolate">$0 MXN</span>
+                    </div>
+                    <button onclick="sendOrderToWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg active:scale-98">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Pedido por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================================================
+           1. CONFIGURACIÓN GENERAL Y TELÉFONO DE WHATSAPP
+           ========================================================================== */
+        // IMPORTANTE: Reemplaza este número con tu número real de WhatsApp (521 + 10 dígitos)
+        const WHATSAPP_PHONE = "5215500000000"; 
+
+        /* ==========================================================================
+           2. CATALOGO DE PRODUCTOS (FÁCILMENTE EDITABLE)
+           Si deseas modificar un precio, agregar un sabor o añadir un nuevo producto,
+           solo edita o duplica un objeto dentro de esta lista.
+           ========================================================================== */
+        const PRODUCTS_DATA = {
+            'hojaldra-rellena': {
+                name: 'Hojaldra Rellena Especial',
+                basePrice: 65,
+                options: [
+                    { key: 'pan', label: '1. Tipo de Pan (Obligatorio)', choices: ['Nuez 🌰', 'Mantequilla 🧈'] },
+                    { key: 'relleno', label: '2. Base del Relleno', choices: ['Crema Pastelera 🍦', 'Nutella 🍫', 'Crema Batida / Chantillí 🧁'] },
+                    { key: 'chantilly', label: '3. ¿Deseas agregar Chantillí extra?', choices: ['Con Chantillí ✨', 'Sin Chantillí extra'] },
+                    { key: 'fruta', label: '4. Fruta para el Relleno', choices: ['Fresa 🍓', 'Durazno en Almíbar 🍑', 'Plátano 🍌', 'Ninguna / Sin fruta'] },
+                    { key: 'jarabe', label: '5. Jarabe', choices: ['Nutella 🌰', 'Lechera 🍶', 'Chocolate Hershey\'s 🍫', 'Mermelada de Fresa 🍓', 'Ninguno / Sin jarabe'] },
+                    { key: 'topping', label: '6. Topping', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Almendra', 'Chispas de Chocolate 🍫', 'Ninguno / Sin topping'] },
+                    { key: 'decoracion', label: '7. Decoración Superior', choices: ['Fresa 🍓', 'Durazno 🍑', 'Cereza 🍒', 'Ninguna / Sin decoración'] }
+                ]
+            },
+            'hojaldra-sencilla': {
+                name: 'Hojaldra Sencilla',
+                basePrice: 50,
+                options: [
+                    { key: 'jarabe', label: '1. Jarabe a elegir', choices: ['Chocolate Hershey\'s 🍫', 'Lechera 🍶', 'Ninguno / Sin jarabe'] },
+                    { key: 'topping', label: '2. Topping a elegir', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Almendra', 'Chispas de Chocolate 🍫', 'Ninguno / Sin topping'] },
+                    { key: 'chantilly', label: '3. Chantillí', choices: ['Con Chantillí ✨', 'Sin Chantillí'] }
+                ]
+            },
+            'fresas-crema': {
+                name: 'Fresas con Crema (Vaso Grande)',
+                basePrice: 100,
+                options: [
+                    { key: 'topping', label: '1. Topping a elegir', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Chispitas de Chocolate 🍫', 'Ninguno / Sin topping'] },
+                    { key: 'jarabe', label: '2. Jarabe', choices: ['Lechera 🍶', 'Hershey\'s 🍫', 'Ninguno / Sin jarabe'] },
+                    { key: 'pastelito', label: '3. Medio Pastelito Incluido', choices: ['Gansito 🧁', 'Delice 🍰', 'Ninguno / Sin pastelito'] }
+                ]
+            },
+            'flan-napolitano': {
+                name: 'Flan Napolitano🥮 (Rebanada)',
+                basePrice: 45,
+                options: [] // Sin opciones de ingredientes, solo selector de cantidad
+            }
+        };
+
+        /* ==========================================================================
+           3. ESTADO GLOBAL DE LA APLICACIÓN
+           ========================================================================== */
+        let cart = []; // Lista de productos agregados
+        let currentModalProductId = null;
+        let currentModalQuantity = 1;
+
+        /* ==========================================================================
+           4. FUNCIONES DEL PERSONALIZADOR / MODAL DE PRODUCTO
+           ========================================================================== */
+        function openCustomizer(productId) {
+            currentModalProductId = productId;
+            currentModalQuantity = 1;
+
+            const config = PRODUCTS_DATA[productId];
+            const titleEl = document.getElementById('customizer-title');
+            const bodyEl = document.getElementById('customizer-body');
+            const addBtn = document.getElementById('add-customized-btn');
+
+            titleEl.textContent = `Personalizar: ${config.name}`;
+            updateModalPriceDisplay();
+
+            let html = '';
+
+            // Si el producto tiene opciones configurables
+            if (config.options && config.options.length > 0) {
+                config.options.forEach((opt) => {
+                    html += `
+                        <div class="space-y-2 bg-white p-3.5 rounded-2xl border border-brand-rose/40">
+                            <label class="font-bold text-brand-chocolate block text-xs uppercase tracking-wide">${opt.label}</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                ${opt.choices.map((choice, cIdx) => `
+                                    <label class="flex items-center gap-2 text-xs p-2 rounded-xl border border-brand-rose/30 bg-brand-bg cursor-pointer hover:border-brand-chocolate transition-colors">
+                                        <input type="radio" name="opt-${opt.key}" value="${choice}" ${cIdx === 0 ? 'checked' : ''} class="accent-brand-chocolate">
+                                        <span class="leading-tight">${choice}</span>
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                html += `
+                    <div class="p-4 bg-white rounded-2xl border border-brand-rose/40 text-center text-xs text-brand-chocolate/80">
+                        ✨ Rebanada lista para servir. Selecciona la cantidad de piezas abajo.
+                    </div>
+                `;
+            }
+
+            // Agregar campo de notas individuales para este producto
+            html += `
+                <div class="space-y-1.5 bg-white p-3.5 rounded-2xl border border-brand-rose/40">
+                    <label class="font-bold text-brand-chocolate block text-xs uppercase tracking-wide">Notas o especificaciones para este producto (Opcional)</label>
+                    <input type="text" id="item-custom-note" placeholder="Ej. Poner el jarabe por separado, sin azúcar extra..." class="w-full text-xs p-2 rounded-lg border border-brand-rose/60 focus:outline-none focus:ring-2 focus:ring-brand-chocolate bg-brand-bg">
+                </div>
+            `;
+
+            bodyEl.innerHTML = html;
+
+            addBtn.onclick = function() {
+                saveCustomizedItemToCart();
+            };
+
+            document.getElementById('customizer-modal').classList.remove('hidden');
+        }
+
+        function closeCustomizer() {
+            document.getElementById('customizer-modal').classList.add('hidden');
+        }
+
+        function updateModalQty(change) {
+            currentModalQuantity += change;
+            if (currentModalQuantity < 1) currentModalQuantity = 1;
+            document.getElementById('modal-qty-display').textContent = currentModalQuantity;
+            updateModalPriceDisplay();
+        }
+
+        function updateModalPriceDisplay() {
+            if (!currentModalProductId) return;
+            const config = PRODUCTS_DATA[currentModalProductId];
+            const total = config.basePrice * currentModalQuantity;
+            document.getElementById('customizer-price').textContent = `$${total}`;
+        }
+
+        function saveCustomizedItemToCart() {
+            const config = PRODUCTS_DATA[currentModalProductId];
+            const selectedOptions = {};
+
+            if (config.options && config.options.length > 0) {
+                config.options.forEach(opt => {
+                    const checked = document.querySelector(`input[name="opt-${opt.key}"]:checked`);
+                    if (checked) {
+                        selectedOptions[opt.key] = checked.value;
+                    }
+                });
+            }
+
+            const itemNoteInput = document.getElementById('item-custom-note');
+            const itemNote = itemNoteInput ? itemNoteInput.value.trim() : '';
+
+            const cartItem = {
+                id: Date.now(),
+                productId: currentModalProductId,
+                name: config.name,
+                unitPrice: config.basePrice,
+                quantity: currentModalQuantity,
+                options: selectedOptions,
+                note: itemNote
+            };
+
+            cart.push(cartItem);
+            updateCartUI();
+            closeCustomizer();
+            toggleCartModal(true); // Abre el carrito para mostrar la adición
+        }
+
+        /* ==========================================================================
+           5. FUNCIONES DEL CARRITO DE COMPRAS
+           ========================================================================== */
+        function toggleCartModal(forceOpen = false) {
+            const modal = document.getElementById('cart-modal');
+            if (forceOpen) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        function changeCartItemQty(itemId, change) {
+            const item = cart.find(i => i.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== itemId);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeCartItem(itemId) {
+            cart = cart.filter(i => i.id !== itemId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cart-count-badge');
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+
+            // Total de piezas combinadas
+            const totalItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.textContent = totalItemsCount;
+
+            let grandTotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-brand-chocolate/60 space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-brand-rose"></i>
+                        <p class="text-sm">Tu pedido está vacío por el momento.</p>
+                        <a href="#menu" onclick="toggleCartModal(false)" class="inline-block text-xs font-bold text-brand-chocolate underline">Explorar el menú</a>
+                    </div>
+                `;
+                totalEl.textContent = '$0 MXN';
+                return;
+            }
+
+            let html = '';
+            cart.forEach(item => {
+                const subtotal = item.unitPrice * item.quantity;
+                grandTotal += subtotal;
+
+                let optionsHtml = '';
+                if (item.options && Object.keys(item.options).length > 0) {
+                    optionsHtml = '<div class="text-[11px] text-brand-chocolate/70 mt-1 space-y-0.5 border-l-2 border-brand-rose/60 pl-2">';
+                    for (const [key, val] of Object.entries(item.options)) {
+                        optionsHtml += `<div><span class="capitalize font-medium">${key}</span>: ${val}</div>`;
+                    }
+                    optionsHtml += '</div>';
+                }
+
+                let noteHtml = '';
+                if (item.note) {
+                    noteHtml = `<div class="text-[11px] text-amber-800 bg-amber-50 p-1.5 rounded mt-1.5 border border-amber-200">📌 <strong>Nota:</strong> ${item.note}</div>`;
+                }
+
+                html += `
+                    <div class="bg-white p-3.5 rounded-2xl border border-brand-rose/40 shadow-sm space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <h4 class="font-serif font-bold text-sm text-brand-chocolate">${item.name}</h4>
+                                <span class="text-xs font-bold text-brand-chocolate/80">$${item.unitPrice} c/u</span>
+                            </div>
+                            <button onclick="removeCartItem(${item.id})" class="text-red-400 hover:text-red-600 text-xs p-1" title="Eliminar del pedido">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+
+                        ${optionsHtml}
+                        ${noteHtml}
+
+                        <!-- Adjust Quantity inside Cart -->
+                        <div class="flex justify-between items-center pt-2 border-t border-brand-rose/20">
+                            <div class="flex items-center gap-2">
+                                <button onclick="changeCartItemQty(${item.id}, -1)" class="w-6 h-6 rounded bg-brand-rose/30 text-brand-chocolate font-bold flex items-center justify-center text-xs hover:bg-brand-rose">-</button>
+                                <span class="font-bold text-xs text-brand-chocolate px-1">${item.quantity}</span>
+                                <button onclick="changeCartItemQty(${item.id}, 1)" class="w-6 h-6 rounded bg-brand-rose/30 text-brand-chocolate font-bold flex items-center justify-center text-xs hover:bg-brand-rose">+</button>
+                            </div>
+                            <span class="font-bold text-sm text-brand-chocolate">$${subtotal} MXN</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalEl.textContent = `$${grandTotal} MXN`;
+        }
+
+        /* ==========================================================================
+           6. ENVÍO DEL PEDIDO A WHATSAPP (SIN CARACTERES CORRUTOS / UTF-8 SEGURO)
+           ========================================================================== */
+        function directWhatsAppContact() {
+            const text = encodeURIComponent("¡Hola A&R Repostería! ✨ Quisiera hacer una consulta sobre los postres del menú.");
+            window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
+        }
+
+        function sendOrderToWhatsApp() {
+            if (cart.length === 0) {
+                alert("Tu pedido está vacío. Por favor agrega productos antes de enviar.");
+                return;
+            }
+
+            const nameInput = document.getElementById('customer-name').value.trim();
+            const deliverySelect = document.getElementById('delivery-type').value;
+            const generalNote = document.getElementById('order-general-note').value.trim();
+
+            if (!nameInput) {
+                alert("Por favor escribe tu nombre completo antes de enviar el pedido.");
+                document.getElementById('customer-name').focus();
+                return;
+            }
+
+            // Construcción del mensaje con formato compatible estándar de WhatsApp
+            let msg = `*PEDIDO DE POSTRES - A&R REPOSTERIA*\n`;
+            msg += `----------------------------------------\n`;
+            msg += `*Cliente:* ${nameInput}\n`;
+            msg += `*Entrega:* ${deliverySelect}\n`;
+            if (generalNote) {
+                msg += `*Nota General:* ${generalNote}\n`;
+            }
+            msg += `----------------------------------------\n\n`;
+            msg += `*DETALLE DE LA ORDEN:*\n\n`;
+
+            let grandTotal = 0;
+            cart.forEach((item, idx) => {
+                const subtotal = item.unitPrice * item.quantity;
+                grandTotal += subtotal;
+
+                msg += `*${idx + 1}. ${item.quantity}x ${item.name}* - $${subtotal} MXN\n`;
+
+                if (item.options && Object.keys(item.options).length > 0) {
+                    for (const [key, val] of Object.entries(item.options)) {
+                        msg += `   - ${key.toUpperCase()}: ${val}\n`;
+                    }
+                }
+
+                if (item.note) {
+                    msg += `   - NOTA: ${item.note}\n`;
+                }
+
+                msg += `\n`;
+            });
+
+            msg += `----------------------------------------\n`;
+            msg += `*TOTAL GENERAL: $${grandTotal} MXN*\n\n`;
+            msg += `Quedo a la espera de la confirmación y datos para el pago. ¡Muchas gracias!`;
+
+            // Codificación limpia de caracteres especiales para WhatsApp
+            const targetURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+            window.open(targetURL, '_blank');
+        }
+    </script>
+</body>
+</html>
