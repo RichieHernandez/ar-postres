@@ -392,282 +392,225 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        /* ==========================================================================
-           1. CONFIGURACIÓN GENERAL Y TELÉFONO DE WHATSAPP
-           ========================================================================== */
-        // IMPORTANTE: Reemplaza este número con tu número real de WhatsApp (521 + 10 dígitos)
-        const WHATSAPP_PHONE = "5531337573"; 
-
-        /* ==========================================================================
-           2. CATALOGO DE PRODUCTOS (FÁCILMENTE EDITABLE)
-           Si deseas modificar un precio, agregar un sabor o añadir un nuevo producto,
-           solo edita o duplica un objeto dentro de esta lista.
-           ========================================================================== */
+        // Configuración del número de teléfono (Sustituye por tu número real)
+        const WHATSAPP_PHONE = "5531337573";
+        
+        // 1. BASE DE DATOS DE PRODUCTOS Y OPCIONES
         const PRODUCTS_DATA = {
-            'hojaldra-rellena': {
-                name: 'Hojaldra Rellena Especial',
+            'hojaldra-especial': {
+                name: 'Hojaldra Rellena Especial 🥯',
                 basePrice: 65,
                 options: [
-                    { key: 'pan', label: '1. Tipo de Pan (Obligatorio)', choices: ['Nuez 🌰', 'Mantequilla 🧈'] },
-                    { key: 'relleno', label: '2. Base del Relleno', choices: ['Crema Pastelera 🍦', 'Nutella 🍫', 'Crema Batida / Chantillí 🧁'] },
-                    { key: 'chantilly', label: '3. ¿Deseas agregar Chantillí extra?', choices: ['Con Chantillí ✨', 'Sin Chantillí extra'] },
-                    { key: 'fruta', label: '4. Fruta para el Relleno', choices: ['Fresa 🍓', 'Durazno en Almíbar 🍑', 'Plátano 🍌', 'Ninguna / Sin fruta'] },
+                    { key: 'pan', label: '1. Tipo de Pan', choices: ['Nuez 🌰', 'Mantequilla 🧈'] },
+                    { key: 'relleno', label: '2. Base de Relleno', choices: ['Crema Pastelera', 'Nutella 🌰', 'Crema Batida'] },
+                    { key: 'chantilly', label: '3. Chantillí', choices: ['Con Chantillí 🍦', 'Sin Chantillí'] },
+                    { key: 'fruta', label: '4. Fruta', choices: ['Fresa 🍓', 'Durazno en almíbar 🍑', 'Plátano 🍌', 'Ninguno / Sin fruta'] },
                     { key: 'jarabe', label: '5. Jarabe', choices: ['Nutella 🌰', 'Lechera 🍶', 'Chocolate Hershey\'s 🍫', 'Mermelada de Fresa 🍓', 'Ninguno / Sin jarabe'] },
-                    { key: 'topping', label: '6. Topping', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Almendra', 'Chispas de Chocolate 🍫', 'Ninguno / Sin topping'] },
-                    { key: 'decoracion', label: '7. Decoración Superior', choices: ['Fresa 🍓', 'Durazno 🍑', 'Cereza 🍒', 'Ninguna / Sin decoración'] }
+                    { key: 'topping', label: '6. Topping', choices: ['Nuez', 'Coco rallado 🥥', 'Almendra', 'Chispas de chocolate 🍫', 'Ninguno / Sin topping'] },
+                    { key: 'decoracion', label: '7. Decoración Superior', choices: ['Fresa 🍓', 'Durazno 🍑', 'Ninguno'] }
                 ]
             },
             'hojaldra-sencilla': {
-                name: 'Hojaldra Sencilla',
+                name: 'Hojaldra Sencilla 🥯',
                 basePrice: 50,
                 options: [
-                    { key: 'jarabe', label: '1. Jarabe a elegir', choices: ['Chocolate Hershey\'s 🍫', 'Lechera 🍶', 'Ninguno / Sin jarabe'] },
-                    { key: 'topping', label: '2. Topping a elegir', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Almendra', 'Chispas de Chocolate 🍫', 'Ninguno / Sin topping'] },
-                    { key: 'chantilly', label: '3. Chantillí', choices: ['Con Chantillí ✨', 'Sin Chantillí'] }
+                    { key: 'jarabe', label: '1. Jarabe a elegir', choices: ['Chocolate 🍫', 'Lechera 🍶', 'Ninguno'] },
+                    { key: 'topping', label: '2. Topping a elegir', choices: ['Nuez', 'Coco rallado 🥥', 'Almendra', 'Chispas de chocolate 🍫', 'Ninguno'] }
                 ]
             },
             'fresas-crema': {
-                name: 'Fresas con Crema (Vaso Grande)',
+                name: 'Fresas con Crema (Vaso Grande) 🍓',
                 basePrice: 100,
                 options: [
-                    { key: 'topping', label: '1. Topping a elegir', choices: ['Nuez 🌰', 'Coco Rallado 🥥', 'Chispitas de Chocolate 🍫', 'Ninguno / Sin topping'] },
-                    { key: 'jarabe', label: '2. Jarabe', choices: ['Lechera 🍶', 'Hershey\'s 🍫', 'Ninguno / Sin jarabe'] },
-                    { key: 'pastelito', label: '3. Medio Pastelito Incluido', choices: ['Gansito 🧁', 'Delice 🍰', 'Ninguno / Sin pastelito'] }
+                    { key: 'topping', label: '1. Topping a elegir', choices: ['Nuez 🌰', 'Coco rallado 🥥', 'Chispas de chocolate 🍫', 'Ninguno'] },
+                    { key: 'jarabe', label: '2. Jarabe a elegir', choices: ['Lechera 🍶', 'Hershey\'s 🍫', 'Ninguno'] },
+                    { key: 'pastelito', label: '3. Medio Pastelito incluido', choices: ['Gansito 🧁', 'Delice 🍰'] }
                 ]
             },
             'flan-napolitano': {
-                name: 'Flan Napolitano🥮 (Rebanada)',
+                name: 'Flan Napolitano (Rebanada) 🥮',
                 basePrice: 45,
-                options: [] // Sin opciones de ingredientes, solo selector de cantidad
+                options: []
             }
         };
-
-        /* ==========================================================================
-           3. ESTADO GLOBAL DE LA APLICACIÓN
-           ========================================================================== */
-        let cart = []; // Lista de productos agregados
-        let currentModalProductId = null;
-        let currentModalQuantity = 1;
-
-        /* ==========================================================================
-           4. FUNCIONES DEL PERSONALIZADOR / MODAL DE PRODUCTO
-           ========================================================================== */
-        function openCustomizer(productId) {
-            currentModalProductId = productId;
-            currentModalQuantity = 1;
-
-            const config = PRODUCTS_DATA[productId];
-            const titleEl = document.getElementById('customizer-title');
-            const bodyEl = document.getElementById('customizer-body');
-            const addBtn = document.getElementById('add-customized-btn');
-
-            titleEl.textContent = `Personalizar: ${config.name}`;
-            updateModalPriceDisplay();
-
-            let html = '';
-
-            // Si el producto tiene opciones configurables
-            if (config.options && config.options.length > 0) {
-                config.options.forEach((opt) => {
-                    html += `
-                        <div class="space-y-2 bg-white p-3.5 rounded-2xl border border-brand-rose/40">
-                            <label class="font-bold text-brand-chocolate block text-xs uppercase tracking-wide">${opt.label}</label>
-                            <div class="grid grid-cols-2 gap-2">
-                                ${opt.choices.map((choice, cIdx) => `
-                                    <label class="flex items-center gap-2 text-xs p-2 rounded-xl border border-brand-rose/30 bg-brand-bg cursor-pointer hover:border-brand-chocolate transition-colors">
-                                        <input type="radio" name="opt-${opt.key}" value="${choice}" ${cIdx === 0 ? 'checked' : ''} class="accent-brand-chocolate">
-                                        <span class="leading-tight">${choice}</span>
-                                    </label>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                });
-            } else {
-                html += `
-                    <div class="p-4 bg-white rounded-2xl border border-brand-rose/40 text-center text-xs text-brand-chocolate/80">
-                        ✨ Rebanada lista para servir. Selecciona la cantidad de piezas abajo.
-                    </div>
-                `;
+        
+        // Estado global del carrito y modal
+        let cart = [];
+        let currentSelectedProductId = null;
+        let currentProductConfig = null;
+        let currentQuantity = 1;
+        
+        // 2. APERTURA Y CONFIGURACIÓN DEL MODAL PERSONALIZADOR
+        function openCustomizeModal(productId) {
+            currentProductConfig = PRODUCTS_DATA[productId];
+            if (!currentProductConfig) return;
+        
+            currentSelectedProductId = productId;
+            currentQuantity = 1;
+            
+            const qtyEl = document.getElementById('modal-qty');
+            if (qtyEl) qtyEl.innerText = currentQuantity;
+            
+            const noteEl = document.getElementById('modal-item-note');
+            if (noteEl) noteEl.value = '';
+        
+            const titleEl = document.getElementById('modal-title');
+            if (titleEl) titleEl.innerText = currentProductConfig.name;
+        
+            const container = document.getElementById('options-container');
+            if (container) {
+                container.innerHTML = '';
+                if (currentProductConfig.options && currentProductConfig.options.length > 0) {
+                    currentProductConfig.options.forEach(opt => {
+                        const optDiv = document.createElement('div');
+                        optDiv.className = 'option-group';
+                        
+                        let choicesHTML = opt.choices.map((choice, i) => `
+                            <label class="choice-label">
+                                <input type="radio" name="opt_${opt.key}" value="${choice}" ${i === 0 ? 'checked' : ''}>
+                                <span>${choice}</span>
+                            </label>
+                        `).join('');
+        
+                        optDiv.innerHTML = `
+                            <label class="option-title">${opt.label}:</label>
+                            <div class="choices-list">${choicesHTML}</div>
+                        `;
+                        container.appendChild(optDiv);
+                    });
+                } else {
+                    container.innerHTML = '<p style="color: #7A534C; font-style: italic; text-align: center;">Este producto no requiere personalización adicional.</p>';
+                }
             }
-
-            // Agregar campo de notas individuales para este producto
-            html += `
-                <div class="space-y-1.5 bg-white p-3.5 rounded-2xl border border-brand-rose/40">
-                    <label class="font-bold text-brand-chocolate block text-xs uppercase tracking-wide">Notas o especificaciones para este producto (Opcional)</label>
-                    <input type="text" id="item-custom-note" placeholder="Ej. Poner el jarabe por separado, sin azúcar extra..." class="w-full text-xs p-2 rounded-lg border border-brand-rose/60 focus:outline-none focus:ring-2 focus:ring-brand-chocolate bg-brand-bg">
-                </div>
-            `;
-
-            bodyEl.innerHTML = html;
-
-            addBtn.onclick = function() {
-                saveCustomizedItemToCart();
-            };
-
-            document.getElementById('customizer-modal').classList.remove('hidden');
+        
+            updateModalPrice();
+            const modal = document.getElementById('customize-modal');
+            if (modal) modal.style.display = 'flex';
         }
-
-        function closeCustomizer() {
-            document.getElementById('customizer-modal').classList.add('hidden');
+        
+        function closeCustomizeModal() {
+            const modal = document.getElementById('customize-modal');
+            if (modal) modal.style.display = 'none';
         }
-
-        function updateModalQty(change) {
-            currentModalQuantity += change;
-            if (currentModalQuantity < 1) currentModalQuantity = 1;
-            document.getElementById('modal-qty-display').textContent = currentModalQuantity;
-            updateModalPriceDisplay();
+        
+        function adjustModalQty(delta) {
+            currentQuantity = Math.max(1, currentQuantity + delta);
+            const qtyEl = document.getElementById('modal-qty');
+            if (qtyEl) qtyEl.innerText = currentQuantity;
+            updateModalPrice();
         }
-
-        function updateModalPriceDisplay() {
-            if (!currentModalProductId) return;
-            const config = PRODUCTS_DATA[currentModalProductId];
-            const total = config.basePrice * currentModalQuantity;
-            document.getElementById('customizer-price').textContent = `$${total}`;
+        
+        function updateModalPrice() {
+            if (!currentProductConfig) return;
+            const total = currentProductConfig.basePrice * currentQuantity;
+            const priceEl = document.getElementById('modal-total-price');
+            if (priceEl) priceEl.innerText = `$${total} MXN`;
         }
-
-        function saveCustomizedItemToCart() {
-            const config = PRODUCTS_DATA[currentModalProductId];
-            const selectedOptions = {};
-
-            if (config.options && config.options.length > 0) {
-                config.options.forEach(opt => {
-                    const checked = document.querySelector(`input[name="opt-${opt.key}"]:checked`);
-                    if (checked) {
-                        selectedOptions[opt.key] = checked.value;
+        
+        // 3. AGREGAR PRODUCTO AL CARRITO
+        function confirmAddToCart() {
+            if (!currentProductConfig) return;
+        
+            const selectedOptions = [];
+            if (currentProductConfig.options) {
+                currentProductConfig.options.forEach(opt => {
+                    const selectedInput = document.querySelector(`input[name="opt_${opt.key}"]:checked`);
+                    if (selectedInput) {
+                        selectedOptions.push({
+                            label: opt.label.replace(/^\d+\.\s*/, ''),
+                            value: selectedInput.value
+                        });
                     }
                 });
             }
-
-            const itemNoteInput = document.getElementById('item-custom-note');
-            const itemNote = itemNoteInput ? itemNoteInput.value.trim() : '';
-
-            const cartItem = {
+        
+            const noteInput = document.getElementById('modal-item-note');
+            const itemNote = noteInput ? noteInput.value.trim() : '';
+            const unitPrice = currentProductConfig.basePrice;
+        
+            cart.push({
                 id: Date.now(),
-                productId: currentModalProductId,
-                name: config.name,
-                unitPrice: config.basePrice,
-                quantity: currentModalQuantity,
+                productId: currentSelectedProductId,
+                name: currentProductConfig.name,
+                unitPrice: unitPrice,
+                totalPrice: unitPrice * currentQuantity,
+                quantity: currentQuantity,
                 options: selectedOptions,
                 note: itemNote
-            };
-
-            cart.push(cartItem);
+            });
+        
+            closeCustomizeModal();
             updateCartUI();
-            closeCustomizer();
-            toggleCartModal(true); // Abre el carrito para mostrar la adición
         }
-
-        /* ==========================================================================
-           5. FUNCIONES DEL CARRITO DE COMPRAS
-           ========================================================================== */
-        function toggleCartModal(forceOpen = false) {
-            const modal = document.getElementById('cart-modal');
-            if (forceOpen) {
-                modal.classList.remove('hidden');
+        
+        // 4. ACTUALIZACIÓN DEL CARRITO
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCountEl = document.getElementById('cart-count');
+            const cartTotalEl = document.getElementById('cart-total-price');
+        
+            if (!cartItemsContainer) return;
+            cartItemsContainer.innerHTML = '';
+        
+            let totalCartAmount = 0;
+            let totalItemsCount = 0;
+        
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align: center; color: #7A534C; font-style: italic;">Tu carrito está vacío.</p>';
             } else {
-                modal.classList.toggle('hidden');
+                cart.forEach(item => {
+                    totalCartAmount += item.totalPrice;
+                    totalItemsCount += item.quantity;
+        
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'cart-item';
+        
+                    let optsSummary = item.options.map(o => `<span><b>${o.label}:</b> ${o.value}</span>`).join('<br>');
+                    let noteSummary = item.note ? `<div class="cart-item-note"><i>Nota: ${item.note}</i></div>` : '';
+        
+                    itemDiv.innerHTML = `
+                        <div class="cart-item-info">
+                            <strong>${item.name}</strong>
+                            <div class="cart-item-opts">${optsSummary}</div>
+                            ${noteSummary}
+                            <div class="cart-item-price">$${item.totalPrice} MXN</div>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div class="qty-controls-small">
+                                <button onclick="changeCartItemQty(${item.id}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="changeCartItemQty(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeCartItem(${item.id})">🗑️</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+                });
             }
+        
+            if (cartCountEl) cartCountEl.innerText = totalItemsCount;
+            if (cartTotalEl) cartTotalEl.innerText = `$${totalCartAmount} MXN`;
         }
-
-        function changeCartItemQty(itemId, change) {
+        
+        function changeCartItemQty(itemId, delta) {
             const item = cart.find(i => i.id === itemId);
             if (item) {
-                item.quantity += change;
+                item.quantity += delta;
                 if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.id !== itemId);
+                    removeCartItem(itemId);
+                } else {
+                    item.totalPrice = item.unitPrice * item.quantity;
+                    updateCartUI();
                 }
             }
-            updateCartUI();
         }
-
+        
         function removeCartItem(itemId) {
             cart = cart.filter(i => i.id !== itemId);
             updateCartUI();
         }
-
-        function updateCartUI() {
-            const badge = document.getElementById('cart-count-badge');
-            const container = document.getElementById('cart-items-container');
-            const totalEl = document.getElementById('cart-total-price');
-
-            // Total de piezas combinadas
-            const totalItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.textContent = totalItemsCount;
-
-            let grandTotal = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12 text-brand-chocolate/60 space-y-3">
-                        <i class="fa-solid fa-basket-shopping text-4xl text-brand-rose"></i>
-                        <p class="text-sm">Tu pedido está vacío por el momento.</p>
-                        <a href="#menu" onclick="toggleCartModal(false)" class="inline-block text-xs font-bold text-brand-chocolate underline">Explorar el menú</a>
-                    </div>
-                `;
-                totalEl.textContent = '$0 MXN';
-                return;
-            }
-
-            let html = '';
-            cart.forEach(item => {
-                const subtotal = item.unitPrice * item.quantity;
-                grandTotal += subtotal;
-
-                let optionsHtml = '';
-                if (item.options && Object.keys(item.options).length > 0) {
-                    optionsHtml = '<div class="text-[11px] text-brand-chocolate/70 mt-1 space-y-0.5 border-l-2 border-brand-rose/60 pl-2">';
-                    for (const [key, val] of Object.entries(item.options)) {
-                        optionsHtml += `<div><span class="capitalize font-medium">${key}</span>: ${val}</div>`;
-                    }
-                    optionsHtml += '</div>';
-                }
-
-                let noteHtml = '';
-                if (item.note) {
-                    noteHtml = `<div class="text-[11px] text-amber-800 bg-amber-50 p-1.5 rounded mt-1.5 border border-amber-200">📌 <strong>Nota:</strong> ${item.note}</div>`;
-                }
-
-                html += `
-                    <div class="bg-white p-3.5 rounded-2xl border border-brand-rose/40 shadow-sm space-y-2">
-                        <div class="flex justify-between items-start gap-2">
-                            <div>
-                                <h4 class="font-serif font-bold text-sm text-brand-chocolate">${item.name}</h4>
-                                <span class="text-xs font-bold text-brand-chocolate/80">$${item.unitPrice} c/u</span>
-                            </div>
-                            <button onclick="removeCartItem(${item.id})" class="text-red-400 hover:text-red-600 text-xs p-1" title="Eliminar del pedido">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </div>
-
-                        ${optionsHtml}
-                        ${noteHtml}
-
-                        <!-- Adjust Quantity inside Cart -->
-                        <div class="flex justify-between items-center pt-2 border-t border-brand-rose/20">
-                            <div class="flex items-center gap-2">
-                                <button onclick="changeCartItemQty(${item.id}, -1)" class="w-6 h-6 rounded bg-brand-rose/30 text-brand-chocolate font-bold flex items-center justify-center text-xs hover:bg-brand-rose">-</button>
-                                <span class="font-bold text-xs text-brand-chocolate px-1">${item.quantity}</span>
-                                <button onclick="changeCartItemQty(${item.id}, 1)" class="w-6 h-6 rounded bg-brand-rose/30 text-brand-chocolate font-bold flex items-center justify-center text-xs hover:bg-brand-rose">+</button>
-                            </div>
-                            <span class="font-bold text-sm text-brand-chocolate">$${subtotal} MXN</span>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-            totalEl.textContent = `$${grandTotal} MXN`;
-        }
-
-        /* ==========================================================================
-           6. ENVÍO DEL PEDIDO A WHATSAPP (SIN CARACTERES CORRUTOS / UTF-8 SEGURO)
-           ========================================================================== */
-        function directWhatsAppContact() {
-            const text = encodeURIComponent("¡Hola A&R Repostería! ✨ Quisiera hacer una consulta sobre los postres del menú.");
-            window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
-        }
-
+        
+        // 5. ENVÍO DE PEDIDO A WHATSAPP
         function sendOrderToWhatsApp() {
             if (!cart || cart.length === 0) {
                 alert("Tu pedido está vacío. Por favor agrega productos antes de enviar.");
@@ -684,13 +627,11 @@
                 return;
             }
         
-            // Función auxiliar para limpiar emojis o caracteres corruptos en WhatsApp
             const cleanStr = (str) => {
                 if (!str) return '';
                 return str.replace(/[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ]/g, '').trim();
             };
         
-            // Construcción del mensaje con formato compatible
             let msg = `*PEDIDO DE POSTRES - A&R REPOSTERIA*\n`;
             msg += `----------------------------------\n`;
             msg += `*Cliente:* ${cleanStr(nameInput)}\n`;
@@ -703,16 +644,7 @@
         
             let grandTotal = 0;
             cart.forEach((item, idx) => {
-                // Cálculo seguro del precio para evitar que salga NaN
-                let itemTotal = 0;
-                if (typeof item.totalPrice === 'number' && !isNaN(item.totalPrice)) {
-                    itemTotal = item.totalPrice;
-                } else if (typeof item.price === 'number' && !isNaN(item.price)) {
-                    itemTotal = item.price * (item.quantity || 1);
-                } else if (typeof item.unitPrice === 'number' && !isNaN(item.unitPrice)) {
-                    itemTotal = item.unitPrice * (item.quantity || 1);
-                }
-        
+                let itemTotal = item.totalPrice || (item.unitPrice * item.quantity);
                 grandTotal += itemTotal;
                 const qty = item.quantity || 1;
         
@@ -737,6 +669,6 @@
             const encodedMsg = encodeURIComponent(msg);
             window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodedMsg}`, '_blank');
         }
-    </script>
+        </script>
 </body>
 </html>
