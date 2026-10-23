@@ -664,7 +664,7 @@
            6. ENVÍO DEL PEDIDO A WHATSAPP (SIN CARACTERES CORRUTOS / UTF-8 SEGURO)
            ========================================================================== */
         function directWhatsAppContact() {
-            const text = encodeURIComponent("¡Hola A&R Repostería! ✨ Quisiera hacer una consulta sobre los postres del menú.");
+            const text = encodeURIComponent("¡Hola A&R Repostería! Quisiera hacer una consulta sobre los postres del menú.");
             window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
         }
 
