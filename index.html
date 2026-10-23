@@ -669,60 +669,64 @@
         }
 
         function sendOrderToWhatsApp() {
-            if (cart.length === 0) {
-                alert("Tu pedido está vacío. Por favor agrega productos antes de enviar.");
-                return;
-            }
+    if (cart.length === 0) {
+        alert("Tu pedido está vacío. Por favor agrega productos antes de enviar.");
+        return;
+    }
 
-            const nameInput = document.getElementById('customer-name').value.trim();
-            const deliverySelect = document.getElementById('delivery-type').value;
-            const generalNote = document.getElementById('order-general-note').value.trim();
+    const nameInput = document.getElementById('customer-name').value.trim();
+    const deliverySelect = document.getElementById('delivery-type').value;
+    const generalNote = document.getElementById('order-general-note').value.trim();
 
-            if (!nameInput) {
-                alert("Por favor escribe tu nombre completo antes de enviar el pedido.");
-                document.getElementById('customer-name').focus();
-                return;
-            }
+    if (!nameInput) {
+        alert("Por favor escribe tu nombre completo antes de enviar el pedido.");
+        document.getElementById('customer-name').focus();
+        return;
+    }
 
-            // Construcción del mensaje con formato compatible estándar de WhatsApp
-            let msg = `*PEDIDO DE POSTRES - A&R REPOSTERIA*\n`;
-            msg += `----------------------------------------\n`;
-            msg += `*Cliente:* ${nameInput}\n`;
-            msg += `*Entrega:* ${deliverySelect}\n`;
-            if (generalNote) {
-                msg += `*Nota General:* ${generalNote}\n`;
-            }
-            msg += `----------------------------------------\n\n`;
-            msg += `*DETALLE DE LA ORDEN:*\n\n`;
+    // Función auxiliar para limpiar emojis o caracteres corruptos en WhatsApp
+    const cleanStr = (str) => {
+        if (!str) return '';
+        return str.replace(/[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ]/g, '').trim();
+    };
 
-            let grandTotal = 0;
-            cart.forEach((item, idx) => {
-                const subtotal = item.unitPrice * item.quantity;
-                grandTotal += subtotal;
+    // Construcción del mensaje con formato compatible
+    let msg = `*PEDIDO DE POSTRES - A&R REPOSTERIA*\n`;
+    msg += `----------------------------------\n`;
+    msg += `*Cliente:* ${cleanStr(nameInput)}\n`;
+    msg += `*Entrega:* ${cleanStr(deliverySelect)}\n`;
+    if (generalNote) {
+        msg += `*Nota General:* ${cleanStr(generalNote)}\n`;
+    }
+    msg += `----------------------------------\n\n`;
+    msg += `*DETALLE DE LA ORDEN:*\n\n`;
 
-                msg += `*${idx + 1}. ${item.quantity}x ${item.name}* - $${subtotal} MXN\n`;
+    let grandTotal = 0;
+    cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.quantity;
+        grandTotal += itemTotal;
 
-                if (item.options && Object.keys(item.options).length > 0) {
-                    for (const [key, val] of Object.entries(item.options)) {
-                        msg += `   - ${key.toUpperCase()}: ${val}\n`;
-                    }
-                }
+        msg += `*${idx + 1}. ${item.quantity}x ${cleanStr(item.name)}* - *$${itemTotal} MXN*\n`;
 
-                if (item.note) {
-                    msg += `   - NOTA: ${item.note}\n`;
-                }
-
-                msg += `\n`;
+        if (item.options && item.options.length > 0) {
+            item.options.forEach(opt => {
+                msg += `  - ${cleanStr(opt.label).toUpperCase()}: ${cleanStr(opt.value)}\n`;
             });
-
-            msg += `----------------------------------------\n`;
-            msg += `*TOTAL GENERAL: $${grandTotal} MXN*\n\n`;
-            msg += `Quedo a la espera de la confirmación y datos para el pago. ¡Muchas gracias!`;
-
-            // Codificación limpia de caracteres especiales para WhatsApp
-            const targetURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
-            window.open(targetURL, '_blank');
         }
+
+        if (item.note) {
+            msg += `  - *Nota:* _${cleanStr(item.note)}_\n`;
+        }
+        msg += `\n`;
+    });
+
+    msg += `----------------------------------\n`;
+    msg += `*TOTAL GENERAL: $${grandTotal} MXN*\n\n`;
+    msg += `Quedo a la espera de la confirmación y datos para el pago. ¡Muchas gracias!`;
+
+    const encodedMsg = encodeURIComponent(msg);
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodedMsg}`, '_blank');
+}
     </script>
 </body>
 </html>
